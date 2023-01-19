@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">OrderAppDemo</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="Login_account">Account:</string>
+    <string name="Login_psw">Password:</string>
+    <string name="Login_edittext_account">请输入用户名（手机号）</string>
+    <string name="Login_edittext_psw">请输入密码(不少于6位)</string>
+    <string name="Register_edittext_psw">请重复密码</string>
+    <string name="Login_button_SignUp">Sign up</string>
+    <string name="Login_button_SignIn">Sign in</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="action_settings">Settings</string>
+
+
+</resources>
