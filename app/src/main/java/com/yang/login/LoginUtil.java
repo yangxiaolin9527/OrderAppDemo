@@ -1,13 +1,14 @@
 package com.yang.login;
 
-import android.widget.Toast;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginUtil {
-    public static boolean isPhoneValid(String account){
-        if (null == account){
+
+    static int loginRes;
+
+    public static boolean isPhoneValid(String account) {
+        if (null == account) {
             return false;
         }
         String pattern = "1\\d{10}";
@@ -16,8 +17,8 @@ public class LoginUtil {
         return matcher.matches();
     }
 
-    public static boolean isPswValid(String psw){
-        return psw != null && psw.trim().length()>5;
+    public static boolean isPswValid(String psw) {
+        return psw != null && psw.trim().length() > 5;
     }
 
 }

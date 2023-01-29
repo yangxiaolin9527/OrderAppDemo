@@ -25,7 +25,6 @@
         android:layout_height="wrap_content"
         android:hint="@string/Login_edittext_account"
         android:inputType="phone"
-
         app:layout_constraintBottom_toBottomOf="@+id/Login_TextView_Account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

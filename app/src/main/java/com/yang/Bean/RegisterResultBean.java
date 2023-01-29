@@ -1,8 +1,8 @@
-package com.yang.login;
+package com.yang.Bean;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RegisterResult {
+public class RegisterResultBean {
 
     @SerializedName("is_succeed")
     private int isSucceed;
@@ -11,7 +11,4 @@ public class RegisterResult {
         return isSucceed;
     }
 
-    public void setIsSucceed(int isSucceed) {
-        this.isSucceed = isSucceed;
-    }
 }

@@ -1,35 +1,28 @@
 package com.yang.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.accessibilityservice.FingerprintGestureController;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.yang.order_appdemo.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.yang.Bean.RegisterResultBean;
+import com.yang.order_appdemo.R;
+import com.yang.util.Constant;
+import com.yang.util.OkHttpClientUtil;
 
 import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
-import okhttp3.OkHttp;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -79,13 +72,12 @@ public class RegisterActivity extends AppCompatActivity {
                 final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                 String sendString = String.format("{\"account\":%1s,\"password\":%2s}",s1,s2);
 
-                OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody = RequestBody.create(JSON,sendString);
                 Request request = new Request.Builder()
-                        .url(Constant.BASE_URL+Constant.registerURL)
+                        .url(Constant.BASE_URL+ Constant.REGISTER_URL)
                         .post(requestBody)
                         .build();
-                okHttpClient.newCall(request).enqueue(new Callback() {
+                OkHttpClientUtil.getOkHttpClient().newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.e("res_f",e.toString());
@@ -96,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (response.isSuccessful()){
                             Log.i("res","------------Register---------------");
                             String responseString = response.body().string();
-                            RegisterResult registerResult = new Gson().fromJson(responseString,RegisterResult.class);
+                            RegisterResultBean registerResult = new Gson().fromJson(responseString, RegisterResultBean.class);
                             int res = registerResult.getIsSucceed();
                             Log.e("print","res = "+res);
                             switch (res){
@@ -110,8 +102,17 @@ public class RegisterActivity extends AppCompatActivity {
                                 case 1: {
                                     Looper.prepare();
                                     Toast.makeText(RegisterActivity.this,"注册成功！",Toast.LENGTH_SHORT).show();
+                                    /*
+                                    * DONE:注册成功后进入登录界面，Intent传递账号密码到登录界面
+                                    * */
+                                    Intent intentToLogin = new Intent(RegisterActivity.this,LoginActivity.class);
+                                    intentToLogin.putExtra("account",s1);
+                                    intentToLogin.putExtra("password",s2);
+                                    startActivity(intentToLogin);
+                                    Log.e("intent","-------------------------");
+
+//                                    RegisterActivity.this.onDestroy();
                                     Looper.loop();
-                                    RegisterActivity.this.finish();
                                 }
                                 break;
                                 case 2:

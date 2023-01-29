@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerclass">
+        <item>Station1</item>
+        <item>Station2</item>
+        <item>Station3</item>
+        <item>Station4</item>
+        <item>Station5</item>
+    </string-array>
+</resources>
