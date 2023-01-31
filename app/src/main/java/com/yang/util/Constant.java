@@ -2,14 +2,24 @@ package com.yang.util;
 
 import java.util.Map;
 
+import okhttp3.MediaType;
+
 public class Constant {
 //    注：BASE_URL 要根据运行环境（虚拟机/真机)以及是否用公网IP或域名调整
     public static final String BASE_URL = "http://10.0.2.2:5000";
+//    public static final String BASE_URL = "http://192.168.0.103:5000";
+
     public static final String REGISTER_URL = "/register";
     public static final String LOGIN_URL = "/login";
     public static final String GET_STATION_DETAIL_URL = "/station";
     public static final String CONFIRM_RESERVE_URL = "/reserve_confirm";
+    public static final String CANCEL_RESERVATION_URL = "/cancel_reservation";
+    public static final String MY_RESERVATION_URL = "/my_reservation";
+    public static final String CONFIRM_ORDER_URL = "/confirm_order";
+    public static final String CONFIRM_FINISH_ORDER_URL = "/confirm_finish_order";
+    public static final String FINISH_ORDER_URL = "/finish_order";
 
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     public static final String CHARGE_STATION1_ID = "1";
     public static final String CHARGE_STATION2_ID = "2";
@@ -18,6 +28,11 @@ public class Constant {
     public static final String CHARGE_STATION5_ID = "5";
 
     public static final String LIST_BEAN_KEY = "ports detail";
+    public static final String REFRESH_RESERVATION_BEAN_KEY = "reservation detail";
+    public static final String REFRESH_DEAL_BEAN_KEY = "deal detail";
+
+    public static final String KEEP_COOKIE = "cookie";
+    public static final String KEEP_USER_NAME = "userName";
 
     public static final Map<Integer,String> PORT_STATE_DESC = Map.of(1,"空闲无预约",2,"使用中无预约");
     public static final Map<Integer,String> PORT_RESERVE_TIME_DESC = Map.of(1,"30",2,"120");

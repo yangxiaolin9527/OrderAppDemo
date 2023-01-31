@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 switch (loginRes){
                                     case 1:{
                                         /*
-                                         * TODO:登录成功后跳转至 main.FunActivity (要将用户信息一并传递)
+                                         * 登录成功后跳转至 main.FunActivity (要将用户信息一并传递)
                                          *  暂时只是将用户id传送作为乞丐版“Cookie”
                                          * */
                                         Looper.prepare();
@@ -118,7 +118,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         Log.i("cookie",fakeCookie); //这个是有值的
                                         Toast.makeText(LoginActivity.this,"登录成功！",Toast.LENGTH_SHORT).show();
                                         Intent intentToFunc = new Intent(LoginActivity.this, FuncActivity.class);
-                                        intentToFunc.putExtra("cookie",fakeCookie);
+                                        intentToFunc.putExtra(Constant.KEEP_COOKIE,fakeCookie);
+                                        intentToFunc.putExtra(Constant.KEEP_USER_NAME,loginInputAccountString);
                                         startActivity(intentToFunc);
                                         Looper.loop();
                                     }

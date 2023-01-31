@@ -15,7 +15,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.yang.order_appdemo.R;
 import com.yang.order_appdemo.databinding.ActivityFuncBinding;
+import com.yang.util.Constant;
 import com.yang.util.FakeCookie;
+import com.yang.util.UserName;
 
 public class FuncActivity extends AppCompatActivity {
 
@@ -24,18 +26,29 @@ public class FuncActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*
+        * TODO:尝试解决切换fragment后点击事件失效
+        * */
+//        FragmentManager fManager = getFragmentManager();
+//        if (null != savedInstanceState){
+//        }
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityFuncBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         /*
-         * 获取LoginActivity中传入的用户id（视为cookie）
+         * 获取LoginActivity中传入的用户id（视为cookie）和account（显示预约用）
          * */
         Intent getCookieFromLogin = getIntent();
         String getCookie = getCookieFromLogin.getStringExtra("cookie");
-        Log.i("cookie",getCookie);
+        Log.i(Constant.KEEP_COOKIE,getCookie);
         FakeCookie.setFakeCookie(getCookie);
+
+        String userName = getCookieFromLogin.getStringExtra(Constant.KEEP_USER_NAME);
+        UserName.setUSE_NAME(userName);
+
 //        if(null == FakeCookie.getFakeCookie()){
 //            Log.i("cookie","nullllllllllllllllllllllllllll");
 //        }else {

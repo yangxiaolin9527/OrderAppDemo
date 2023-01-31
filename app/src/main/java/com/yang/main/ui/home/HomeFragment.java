@@ -18,6 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,7 +42,6 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -50,7 +51,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     //    private List<ListViewBean> listViewBeanList = new ArrayList<>();
     private Handler mHandler;
-    final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+//    final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private List<PortsBean.PortsDTO> portsDTOList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -87,28 +88,17 @@ public class HomeFragment extends Fragment {
                     case 3:
                     case 4:
                     {
-//                        Toast.makeText(getContext(),"click station1",Toast.LENGTH_SHORT).show();
                         Bundle bundle = msg.getData();
                         portsDTOList = (List<PortsBean.PortsDTO>) bundle.getSerializable(Constant.LIST_BEAN_KEY);
                         updateStationLvUI(listviewHome,portsDTOList);
                         setItemListener(listviewHome,portsDTOList);
                     }
                     break;
-//                    case 1:{
-////                        Toast.makeText(getContext(),"click station2",Toast.LENGTH_SHORT).show();
-//                    }
-//                    break;
-//                    case 2:{
-////                        Toast.makeText(getContext(),"click station2",Toast.LENGTH_SHORT).show();
-//                    }
-//                    break;
-//                    case 3:{
-////                        Toast.makeText(getContext(),"click station4",Toast.LENGTH_SHORT).show();
-//                    }
-//                    break;
-//                    case 4:{
-////                        Toast.makeText(getContext(),"click station5",Toast.LENGTH_SHORT).show();
-//                    }
+                    case 5:{
+                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_content_func);
+                            navController.navigate(R.id.action_nav_home_to_nav_gallery);
+                    }
+                    break;
                 }
             }
 
@@ -137,14 +127,14 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 /*
-                                 * TODO：点击确认按钮后，开启子线程，向 reserve_confirm API发送post请求
+                                 * 点击确认按钮后，开启子线程，向 reserve_confirm API发送post请求
                                  * */
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
                                         String sendString = String.format("{\"id\":%1s,\"charge_port\":%2s}",
                                                 FakeCookie.getFakeCookie(),chargePortId);
-                                        RequestBody requestBody = RequestBody.create(JSON,sendString);
+                                        RequestBody requestBody = RequestBody.create(Constant.JSON,sendString);
                                         Request request = new Request.Builder()
                                                 .url(Constant.BASE_URL+Constant.CONFIRM_RESERVE_URL)
                                                 .post(requestBody)
@@ -167,6 +157,12 @@ public class HomeFragment extends Fragment {
                                                         Looper.prepare();
                                                         Toast.makeText(getContext(),"预约成功！",
                                                                 Toast.LENGTH_SHORT).show();
+                                                        /*
+                                                        * 自动切换至第二个Fragment
+                                                        * */
+                                                        Message message = new Message();
+                                                        message.what = 5;
+                                                        mHandler.sendMessage(message);
                                                         Looper.loop();
                                                     }
                                                     break;
@@ -183,6 +179,7 @@ public class HomeFragment extends Fragment {
                                                                 Toast.LENGTH_LONG).show();
                                                         Looper.loop();
                                                     }
+                                                    break;
                                                 }
                                             }
                                         });
@@ -233,7 +230,7 @@ public class HomeFragment extends Fragment {
 //                        设置携带数据，从数据库获取
                                 String sendString = String.format("{\"station_id\":%1s}",
                                         Constant.CHARGE_STATION1_ID);
-                                RequestBody requestBody = RequestBody.create(JSON,sendString);
+                                RequestBody requestBody = RequestBody.create(Constant.JSON,sendString);
                                 Request request = new Request.Builder()
                                         .url(Constant.BASE_URL+Constant.GET_STATION_DETAIL_URL)
                                         .post(requestBody)
@@ -294,7 +291,7 @@ public class HomeFragment extends Fragment {
                             public void run() {
                                 String sendString = String.format("{\"station_id\":%1s}",
                                         Constant.CHARGE_STATION2_ID);
-                                RequestBody requestBody = RequestBody.create(JSON,sendString);
+                                RequestBody requestBody = RequestBody.create(Constant.JSON,sendString);
                                 Request request = new Request.Builder()
                                         .url(Constant.BASE_URL+Constant.GET_STATION_DETAIL_URL)
                                         .post(requestBody)
@@ -344,7 +341,7 @@ public class HomeFragment extends Fragment {
                             public void run() {
                                 String sendString = String.format("{\"station_id\":%1s}",
                                         Constant.CHARGE_STATION3_ID);
-                                RequestBody requestBody = RequestBody.create(JSON,sendString);
+                                RequestBody requestBody = RequestBody.create(Constant.JSON,sendString);
                                 Request request = new Request.Builder()
                                         .url(Constant.BASE_URL+Constant.GET_STATION_DETAIL_URL)
                                         .post(requestBody)
@@ -393,7 +390,7 @@ public class HomeFragment extends Fragment {
                             public void run() {
                                 String sendString = String.format("{\"station_id\":%1s}",
                                         Constant.CHARGE_STATION4_ID);
-                                RequestBody requestBody = RequestBody.create(JSON,sendString);
+                                RequestBody requestBody = RequestBody.create(Constant.JSON,sendString);
                                 Request request = new Request.Builder()
                                         .url(Constant.BASE_URL+Constant.GET_STATION_DETAIL_URL)
                                         .post(requestBody)
@@ -442,7 +439,7 @@ public class HomeFragment extends Fragment {
                             public void run() {
                                 String sendString = String.format("{\"station_id\":%1s}",
                                         Constant.CHARGE_STATION5_ID);
-                                RequestBody requestBody = RequestBody.create(JSON,sendString);
+                                RequestBody requestBody = RequestBody.create(Constant.JSON,sendString);
                                 Request request = new Request.Builder()
                                         .url(Constant.BASE_URL+Constant.GET_STATION_DETAIL_URL)
                                         .post(requestBody)

@@ -5,7 +5,9 @@ import okhttp3.OkHttpClient;
 // 饿汉式单例模式
 public class OkHttpClientUtil {
 //    private static HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
-    private static OkHttpClient okHttpClient = new OkHttpClient().newBuilder().build();
+    private static OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+        .retryOnConnectionFailure(true)
+        .build();
 /*            .cookieJar(new CookieJar() {
                 @Override
                 public void saveFromResponse(@NonNull HttpUrl httpUrl, @NonNull List<Cookie> list) {
